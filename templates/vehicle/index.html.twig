@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mt-3 mb-3">Liste des Campers</h1>
+        <ul>
+            {% for vehicle in vehicles %}
+               <li><a href="{{ path('availability_show', {'id': vehicle.id}) }}">{{ vehicle.brand }} {{ vehicle.model }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

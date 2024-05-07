@@ -4,3 +4,19 @@ controllers:
         namespace: App\Controller
     type: attribute
 
+vehicle_create:
+    path: /vehicules/ajouter
+    controller: App\Controller\VehicleController::create
+
+availability_create:
+    path: /disponibilites/ajouter
+    controller: 'App\Controller\AvailabilityController::create'
+
+vehicle_index:
+    path: /vehicules
+    controller: App\Controller\VehicleController::index
+
+availability_show:
+    path: /disponibilites/{id}
+    controller: App\Controller\AvailabilityController::show
+
