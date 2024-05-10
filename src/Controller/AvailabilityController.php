@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Vehicle;
-use App\Repository\VehicleRepository;
 use App\Repository\AvailabilityRepository;
 use App\Entity\Availability;
 use App\Form\AvailabilityType;
@@ -94,8 +93,50 @@ class AvailabilityController extends AbstractController
         ]);
     }
 
+    #[Route('/disponibilites/{slug}/{id}/confirmer', name: 'availability_delete_confirm', methods: ['GET'])]
+    public function deleteConfirm(string $slug, int $id, EntityManagerInterface $entityManager): Response
+    {
+        $vehicle = $entityManager->getRepository(Vehicle::class)->findOneBy(['slug' => $slug]);
 
+        if (!$vehicle) {
+            throw $this->createNotFoundException('Le véhicule demandé n\'a pas été trouvé.');
+        }
 
+        $availability = $entityManager->getRepository(Availability::class)->findOneBy(['vehicle' => $vehicle, 'id' => $id]);
+
+        if (!$availability) {
+            throw $this->createNotFoundException('La disponibilité demandée n\'a pas été trouvée.');
+        }
+
+        return $this->render('availability/delete_confirm.html.twig', [
+            'vehicle' => $vehicle,
+            'availability' => $availability,
+        ]);
+    }
+
+    #[Route('/disponibilites/{slug}/{id}/supprimer', name: 'availability_delete', methods: ['DELETE'])]
+    public function delete(Request $request, EntityManagerInterface $entityManager, string $slug, int $id): Response
+    {
+
+        $vehicle = $entityManager->getRepository(Vehicle::class)->findOneBy(['slug' => $slug]);
+
+        if (!$vehicle) {
+            throw $this->createNotFoundException('Le véhicule demandé n\'a pas été trouvé.');
+        }
+
+        $availability = $entityManager->getRepository(Availability::class)->findOneBy(['vehicle' => $vehicle, 'id' => $id]);
+
+        if (!$availability) {
+            throw $this->createNotFoundException('La disponibilité demandée n\'a pas été trouvée.');
+        }
+
+        $entityManager->remove($availability);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Disponibilité supprimée avec succès.');
+
+        return $this->redirectToRoute('availability_show', ['slug' => $vehicle->getSlug()]);
+    }
 
 }
 

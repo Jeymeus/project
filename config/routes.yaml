@@ -23,8 +23,25 @@ availability_show:
         slug: '[a-z0-9\-]+'
 
 availability_edit:
-    path: /disponibilites/{slug}/{id}/edit
+    path: /disponibilites/{slug}/{id}/modifier
     controller: App\Controller\AvailabilityController::edit
     requirements:
         slug: '[a-z0-9\-]+'
         id: \d+
+
+availability_delete_confirm:
+    path: /disponibilites/{slug}/{id}/confirmer
+    controller: App\Controller\AvailabilityController::deleteConfirm
+    requirements:
+        slug: '[a-z0-9\-]+'
+        id: '\d+'
+
+availability_delete:
+    path: /disponibilites/{slug}/{id}/supprimer
+    methods: [DELETE]
+    controller: App\Controller\AvailabilityController::delete
+    requirements:
+        slug: '[a-z0-9\-]+'
+        id: '\d+'
+
+

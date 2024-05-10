@@ -13,6 +13,14 @@
                         <li>Statut : {{ availability.status ? 'Disponible' : 'Non disponible' }}</li>
                     </ul>
                     <a href="{{ path('availability_edit', {'slug': vehicle.slug, 'id': availability.id}) }}" class="btn btn-primary mt-3">Modifier</a>
+                    
+                    {# <form action="{{ path('availability_delete', {'slug': vehicle.slug, 'id': availability.id}) }}" method="post">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit" class="btn btn-danger mt-3">Oui, supprimer</button>
+                    </form> #}
+                    <a href="{{ path('availability_delete_confirm', {'slug': vehicle.slug, 'id': availability.id}) }}" class="btn btn-danger mt-3">Supprimer</a>
+
+
                 </div>
             </div>
         {% endfor %}
