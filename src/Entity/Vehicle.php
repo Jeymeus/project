@@ -19,6 +19,15 @@ class Vehicle
     #[ORM\Column(length: 255)]
     private ?string $model = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $slug = null;
+
+    #[ORM\Column(type: 'datetime_immutable')]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -39,6 +48,7 @@ class Vehicle
     public function setBrand(string $brand): static
     {
         $this->brand = $brand;
+        $this->generateSlug();
 
         return $this;
     }
@@ -51,7 +61,69 @@ class Vehicle
     public function setModel(string $model): static
     {
         $this->model = $model;
+        $this->generateSlug();
 
         return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(?string $slug): static
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    private function generateSlug(): void
+    {
+        if ($this->brand && $this->model) {
+            $brand = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $this->brand);
+            $model = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $this->model);
+            $this->slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $brand . '-' . $model), '-'));
+        }
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAtValue(): void
+    {
+        $this->createdAt = new \DateTimeImmutable();
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedAtValue(): void
+    {
+        $this->updatedAt = new \DateTimeImmutable();
     }
 }

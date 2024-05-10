@@ -17,6 +17,14 @@ vehicle_index:
     controller: App\Controller\VehicleController::index
 
 availability_show:
-    path: /disponibilites/{id}
+    path: /disponibilites/{slug}
     controller: App\Controller\AvailabilityController::show
+    requirements:
+        slug: '[a-z0-9\-]+'
 
+availability_edit:
+    path: /disponibilites/{slug}/{id}/edit
+    controller: App\Controller\AvailabilityController::edit
+    requirements:
+        slug: '[a-z0-9\-]+'
+        id: \d+

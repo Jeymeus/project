@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Vehicle;
 use App\Entity\Availability;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -14,6 +15,17 @@ class AvailabilityRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Availability::class);
+    }
+
+
+     // Méthode pour récupérer les disponibilités d'un véhicule spécifique
+    public function findByVehicle(Vehicle $vehicle)
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.vehicle = :vehicle')
+            ->setParameter('vehicle', $vehicle)
+            ->getQuery()
+            ->getResult();
     }
 
 //    /**

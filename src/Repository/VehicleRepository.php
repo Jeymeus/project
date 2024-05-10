@@ -16,6 +16,32 @@ class VehicleRepository extends ServiceEntityRepository
         parent::__construct($registry, Vehicle::class);
     }
 
+     /**
+     * Retourne un véhicule en fonction de son slug.
+     *
+     * @param string $slug
+     * @return Vehicle|null
+     */
+    public function findOneBySlug(string $slug): ?Vehicle
+    {
+        return $this->findOneBy(['slug' => $slug]);
+    }
+
+    /**
+     * Retourne tous les véhicules disponibles.
+     *
+     * @return Vehicle[]
+     */
+    public function findAllAvailableVehicles(): array
+    {
+        return $this->createQueryBuilder('v')
+            ->leftJoin('v.availability', 'a')
+            ->andWhere('a.status = :status')
+            ->setParameter('status', true) // Supposons que true signifie disponible
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Vehicle[] Returns an array of Vehicle objects
     //     */

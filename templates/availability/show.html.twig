@@ -2,13 +2,20 @@
 
 {% block body %}
     <div class="container">
-        <h1 class="mt-3 mb-3">Disponibilité du {{ availability.vehicle.brand | upper }} {{ availability.vehicle.model | upper }}</h1>
-        <ul>
-            <li>Date de début : {{ availability.startDate|date('d-m-Y') }}</li>
-            <li>Date de fin : {{ availability.endDate|date('d-m-Y') }}</li>
-            <li>Prix par jour : {{ availability.pricePerDay }}</li>
-            <li>Statut : {{ availability.status ? 'Disponible' : 'Non disponible' }}</li>
-        </ul>
-    </div>
+        <h1 class="mt-3 mb-3">Disponibilités du véhicule {{ vehicle.brand | upper }} {{ vehicle.model | upper }}</h1>
+        {% for availability in availabilities %}
+            <div class="card mt-3">
+                <div class="card-body">
+                    <ul>
+                        <li>Date de début : {{ availability.startDate|date('d-m-Y') }}</li>
+                        <li>Date de fin : {{ availability.endDate|date('d-m-Y') }}</li>
+                        <li>Prix par jour : {{ availability.pricePerDay }}</li>
+                        <li>Statut : {{ availability.status ? 'Disponible' : 'Non disponible' }}</li>
+                    </ul>
+                    <a href="{{ path('availability_edit', {'slug': vehicle.slug, 'id': availability.id}) }}" class="btn btn-primary mt-3">Modifier</a>
+                </div>
+            </div>
+        {% endfor %}
+
 
 {% endblock %}

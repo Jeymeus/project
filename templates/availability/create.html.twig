@@ -2,11 +2,21 @@
 
 {% extends 'base.html.twig' %}
 
-{% block title %}Ajout d'une disponibilité{% endblock %}
+{% block title %}
+    {% if availability.id is defined %}
+        Modifier la disponibilité
+    {% else %}
+        Ajout d'une disponibilité
+    {% endif %}
+{% endblock %}
 
 {% block body %}
     <div class="container">
-        <h1 class="mt-4">Ajout d'une disponibilité</h1>
+        {% if availability.id is defined %}
+            <h1 class="mt-4">Modifier la disponibilité</h1>
+        {% else %}
+            <h1 class="mt-4">Ajout d'une disponibilité</h1>
+        {% endif %}
 
         <div class="row">
             <div class="col-md-6">
@@ -14,17 +24,17 @@
 
                 <div class="form-group mb-3 mt-3">
                     {{ form_label(form.start_date, 'Date de début') }}
-                    {{ form_widget(form.start_date, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_widget(form.start_date, {'attr': {'class': 'form-control'}, 'value': availability.start_date ? availability.start_date|date('Y-m-d') : null}) }}
                 </div>
 
-                <div class="form-group  mb-3">
+                <div class="form-group mb-3">
                     {{ form_label(form.end_date, 'Date de fin') }}
-                    {{ form_widget(form.end_date, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_widget(form.end_date, {'attr': {'class': 'form-control'}, 'value': availability.end_date ? availability.end_date|date('Y-m-d') : null}) }}
                 </div>
 
                 <div class="form-group mb-3">
                     {{ form_label(form.price_per_day, 'Prix par jour') }}
-                    {{ form_widget(form.price_per_day, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_widget(form.price_per_day, {'attr': {'class': 'form-control'}, 'value': availability.price_per_day}) }}
                 </div>
 
                 <div class="form-group mb-3">
@@ -42,7 +52,13 @@
                     {{ form_widget(form.vehicle, {'attr': {'class': 'form-select'}}) }}
                 </div>
 
-                <button type="submit" class="btn btn-primary mb-3">Créer</button>
+                <button type="submit" class="btn btn-primary mb-3">
+                    {% if availability.id is defined %}
+                        Modifier
+                    {% else %}
+                        Créer
+                    {% endif %}
+                </button>
 
                 {{ form_end(form) }}
             </div>

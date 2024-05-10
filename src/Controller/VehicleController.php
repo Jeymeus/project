@@ -39,6 +39,11 @@ class VehicleController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            
+            // Auto-remplir les champs createdAt et updatedAt
+            $vehicle->setCreatedAt(new \DateTimeImmutable());
+            $vehicle->setUpdatedAt(new \DateTimeImmutable());
+
             $entityManager = $doctrine->getManager();
             $entityManager->persist($vehicle);
             $entityManager->flush();

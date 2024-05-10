@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Vehicle;
+use App\Repository\VehicleRepository;
+use App\Repository\AvailabilityRepository;
 use App\Entity\Availability;
 use App\Form\AvailabilityType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,6 +23,11 @@ class AvailabilityController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            // Auto-remplir les champs createdAt et updatedAt
+            $availability->setCreatedAt(new \DateTimeImmutable());
+            $availability->setUpdatedAt(new \DateTimeImmutable());
+
             $entityManager->persist($availability);
             $entityManager->flush();
 
@@ -33,14 +41,66 @@ class AvailabilityController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/disponibilites/{id}", name="availability_show")
-     */
-    public function show(Availability $availability): Response
+     #[Route('/disponibilites/{slug}', name: 'availability_show')]
+        public function show(string $slug, AvailabilityRepository $availabilityRepository, EntityManagerInterface $entityManager): Response
     {
+        // Récupérer le véhicule en utilisant le slug
+        $vehicleRepository = $entityManager->getRepository(Vehicle::class);
+        $vehicle = $vehicleRepository->findOneBy(['slug' => $slug]);
+
+        if (!$vehicle) {
+            throw $this->createNotFoundException('Véhicule non trouvé');
+        }
+
+        // Récupérer les disponibilités du véhicule spécifique
+        $availabilities = $availabilityRepository->findByVehicle($vehicle);
+
         return $this->render('availability/show.html.twig', [
-            'availability' => $availability,
+            'vehicle' => $vehicle,
+            'availabilities' => $availabilities,
         ]);
     }
 
+    #[Route('/disponibilites/{slug}/{id}/edit', name: 'availability_edit', requirements: ['slug' => '[a-z0-9\-]+', 'id' => '\d+'])]
+    public function edit(Request $request, EntityManagerInterface $entityManager, string $slug, int $id): Response
+    {
+        $vehicle = $entityManager->getRepository(Vehicle::class)->findOneBy(['slug' => $slug]);
+
+        if (!$vehicle) {
+            throw $this->createNotFoundException('Le véhicule demandé n\'a pas été trouvé.');
+        }
+
+        $availability = $entityManager->getRepository(Availability::class)->findOneBy(['vehicle' => $vehicle, 'id' => $id]);
+
+        if (!$availability) {
+            throw $this->createNotFoundException('La disponibilité demandée n\'a pas été trouvée.');
+        }
+
+        $form = $this->createForm(AvailabilityType::class, $availability);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $availability->setUpdatedAt(new \DateTimeImmutable());
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Disponibilité modifiée avec succès.');
+
+            return $this->redirectToRoute('availability_show', ['slug' => $vehicle->getSlug()]);
+        }
+
+        return $this->render('availability/edit.html.twig', [
+            'form' => $form->createView(),
+            'vehicle' => $vehicle,
+        ]);
+    }
+
+
+
+
 }
+
+
+
+
+
+

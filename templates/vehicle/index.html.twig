@@ -5,7 +5,7 @@
         <h1 class="mt-3 mb-3">Liste des Campers</h1>
         <ul>
             {% for vehicle in vehicles %}
-               <li><a href="{{ path('availability_show', {'id': vehicle.id}) }}">{{ vehicle.brand }} {{ vehicle.model }}</a></li>
+               <li><a href="{{ path('availability_show', {'slug': vehicle.slug}) }}">{{ vehicle.brand }} {{ vehicle.model }}</a></li>
             {% endfor %}
         </ul>
     </div>
