@@ -28,13 +28,15 @@ class AvailabilityRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByAvailability($duration)
+    public function findByAvailability($duration, $price_per_day)
     {
         return $this->createQueryBuilder('a')
             ->andWhere('a.start_date <= :start_date')
             ->setParameter('start_date', $duration['start_date'])
             ->andWhere('a.end_date >= :end_date')
             ->setParameter('end_date', $duration['end_date'])
+            ->andWhere('a.price_per_day <= :maxPrice')
+            ->setParameter('maxPrice', $price_per_day)
             ->getQuery()
             ->getResult();
     }

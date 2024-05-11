@@ -9,6 +9,7 @@
         <p>Êtes-vous sûr de vouloir supprimer la disponibilité suivante ?</p>
 
         <ul>
+            <li>Véhicule : {{ vehicle.brand | upper }} {{ vehicle.model | upper }}</li>
             <li>Date de début : {{ availability.startDate|date('d-m-Y') }}</li>
             <li>Date de fin : {{ availability.endDate|date('d-m-Y') }}</li>
             <li>Prix par jour : {{ availability.pricePerDay }}</li>
@@ -19,7 +20,6 @@
             <input type="hidden" name="_method" value="DELETE">
             <button type="submit" class="btn btn-danger mt-3">Oui, supprimer</button>
         </form>
-
         <a href="{{ path('availability_show', {'slug': vehicle.slug}) }}" class="btn btn-secondary mt-3">Non, annuler</a>
     </div>
 {% endblock %}
