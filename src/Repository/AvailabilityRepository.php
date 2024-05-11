@@ -28,6 +28,16 @@ class AvailabilityRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findByAvailability($duration)
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.start_date <= :start_date')
+            ->setParameter('start_date', $duration['start_date'])
+            ->andWhere('a.end_date >= :end_date')
+            ->setParameter('end_date', $duration['end_date'])
+            ->getQuery()
+            ->getResult();
+    }
 //    /**
 //     * @return Availability[] Returns an array of Availability objects
 //     */
