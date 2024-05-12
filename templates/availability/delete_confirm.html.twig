@@ -3,23 +3,21 @@
 {% block title %}Suppression d'une disponibilité{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <h1 class="mt-4">Suppression d'une disponibilité</h1>
+    <h1 class="mt-4">Suppression d'une disponibilité</h1>
 
-        <p>Êtes-vous sûr de vouloir supprimer la disponibilité suivante ?</p>
+    <p>Êtes-vous sûr de vouloir supprimer la disponibilité suivante ?</p>
 
-        <ul>
-            <li>Véhicule : {{ vehicle.brand | upper }} {{ vehicle.model | upper }}</li>
-            <li>Date de début : {{ availability.startDate|date('d-m-Y') }}</li>
-            <li>Date de fin : {{ availability.endDate|date('d-m-Y') }}</li>
-            <li>Prix par jour : {{ availability.pricePerDay }}</li>
-            <li>Statut : {{ availability.status ? 'Disponible' : 'Non disponible' }}</li>
-        </ul>
+    <ul>
+        <li>Véhicule : {{ vehicle.brand | upper }} {{ vehicle.model | upper }}</li>
+        <li>Date de début : {{ availability.startDate|date('d-m-Y') }}</li>
+        <li>Date de fin : {{ availability.endDate|date('d-m-Y') }}</li>
+        <li>Prix par jour : {{ availability.pricePerDay }}</li>
+        <li>Statut : {{ availability.status ? 'Disponible' : 'Non disponible' }}</li>
+    </ul>
 
-       <form action="{{ path('availability_delete', {'slug': vehicle.slug, 'id': availability.id}) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE">
-            <button type="submit" class="btn btn-danger mt-3">Oui, supprimer</button>
-        </form>
-        <a href="{{ path('availability_show', {'slug': vehicle.slug}) }}" class="btn btn-secondary mt-3">Non, annuler</a>
-    </div>
+    <form action="{{ path('availability_delete', {'slug': vehicle.slug, 'id': availability.id}) }}" method="post">
+        <input type="hidden" name="_method" value="DELETE">
+        <button type="submit" class="btn btn-danger mt-3">Oui, supprimer</button>
+    </form>
+    <a href="{{ path('availability_show', {'slug': vehicle.slug}) }}" class="btn btn-secondary mt-3">Non, annuler</a>
 {% endblock %}

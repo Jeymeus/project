@@ -6,11 +6,12 @@ use App\Entity\Availability;
 use App\Entity\Vehicle;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Event\PostSubmitEvent;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\FormEvents;
 
 class AvailabilityType extends AbstractType
 {
@@ -43,13 +44,22 @@ class AvailabilityType extends AbstractType
                     return $vehicle->getBrand() . ' ' . $vehicle->getModel();
                 },
             ])
-            ->add('createdAt', HiddenType::class, [
-                'mapped' => false,
-            ])
-            ->add('updatedAt', HiddenType::class, [
-                'mapped' => false, 
-            ]);
+            ->addEventListener(FormEvents::POST_SUBMIT, $this->attachTimestamps(...));
     }
+
+     public function attachTimestamps(PostSubmitEvent $event) : void
+    {
+        $data = $event->getData();
+        if (!($data instanceof Availability)) {
+            return;
+        } 
+        
+        $data->setUpdatedAt(new \DateTimeImmutable());
+        if (!$data->getId()) {
+            $data->setCreatedAt(new \DateTimeImmutable());
+        }
+        
+    }  
 
     public function configureOptions(OptionsResolver $resolver)
     {

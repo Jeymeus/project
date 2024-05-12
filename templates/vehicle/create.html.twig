@@ -4,22 +4,28 @@
 {% block title %}Ajout Véhicule{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <h1 class="mt-3 mb-3">Ajout d'un véhicule</h1>
-        
-        {{ form_start(form) }}
-        <div class="form-group">
-            {{ form_label(form.brand, 'Marque') }}
-            {{ form_errors(form.brand) }}
-            {{ form_widget(form.brand, {'attr': {'class': 'form-control'}}) }}
-        </div>
-        <div class="form-group">
-            {{ form_label(form.model, 'Modèle') }}
-            {{ form_errors(form.model) }}
-            {{ form_widget(form.model, {'attr': {'class': 'form-control'}}) }}
-        </div>
-        
-        <button type="submit" class="btn btn-primary mt-3">Ajouter</button>
-        {{ form_end(form) }}
+    <h1 class="mt-3 mb-3">Ajout d'un véhicule</h1>
+
+    {{ form_start(form) }}
+    <div class="form-group">
+        {{ form_label(form.brand, 'Marque') }}
+        {{ form_widget(form.brand, {'attr': {'class': 'form-control' ~ (form.brand.vars.errors|length > 0 ? ' is-invalid' : '')}}) }}
+        {% if form.brand.vars.errors|length > 0 %}
+            <div class="invalid-feedback">
+                {{ form_errors(form.brand) }}
+            </div>
+        {% endif %}
     </div>
+    <div class="form-group">
+        {{ form_label(form.model, 'Modèle') }}
+        {{ form_widget(form.model, {'attr': {'class': 'form-control' ~ (form.model.vars.errors|length > 0 ? ' is-invalid' : '')}}) }}
+        {% if form.model.vars.errors|length > 0 %}
+            <div class="invalid-feedback">
+                {{ form_errors(form.model) }}
+            </div>
+        {% endif %}
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Ajouter</button>
+    {{ form_end(form) }}
 {% endblock %}

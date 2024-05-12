@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\VehicleRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: VehicleRepository::class)]
 class Vehicle
@@ -14,9 +15,15 @@ class Vehicle
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "La marque ne peut pas être vide.")]
+    #[Assert\Length(min: 4, max: 50, minMessage: "La marque doit avoir au moins {{ limit }} caractères.", maxMessage: "La marque ne peut pas avoir plus de {{ limit }} caractères.")]
+    #[Assert\Regex(pattern: "/^[\p{L}\p{N}\s\-\-']+$/u", message: "Ceci ne semble pas être une marque de véhicule.")]
     private ?string $brand = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Le modèle ne peut pas être vide.")]
+    #[Assert\Length(min: 3, max: 50, minMessage: "Le modèle doit avoir au moins {{ limit }} caractères.", maxMessage: "Le modèle ne peut pas avoir plus de {{ limit }} caractères.")]
+    #[Assert\Regex(pattern: "/^[\p{L}\p{N}\s\-\-']+$/u", message: "Ceci ne semble pas être un modèle de véhicule.")]
     private ?string $model = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -111,19 +118,4 @@ class Vehicle
         }
     }
 
-    /**
-     * @ORM\PrePersist
-     */
-    public function setCreatedAtValue(): void
-    {
-        $this->createdAt = new \DateTimeImmutable();
-    }
-
-    /**
-     * @ORM\PreUpdate
-     */
-    public function setUpdatedAtValue(): void
-    {
-        $this->updatedAt = new \DateTimeImmutable();
-    }
 }

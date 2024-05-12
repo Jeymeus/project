@@ -3,28 +3,24 @@
 {% block title %}Project{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <h1 class="my-5 text-center">Bienvenue dans le projet de James Fierens</h1>
+    <h1 class="my-5 text-center">Bienvenue dans le projet de James Fierens</h1>
 
-        <section>
-            <h2 class="my-3">Test Technique Symfony</h2>
-            <p>Le but de ce test est de créer une application Symfony qui permet de gérer les disponibilités ainsi que les tarifs d’un véhicule à la location.</p>
+    <section>
+        <h2 class="my-3">Test Technique Symfony</h2>
+        <p>Le but de ce test est de créer une application Symfony qui permet de gérer les disponibilités ainsi que les tarifs d’un véhicule à la location.</p>
 
-            <h3 class="my-3">Les fonctionnalités attendues sont les suivantes :</h3>
-            <ul class="list-group p-3">
-                <li class="list-group-item">Créer un véhicule</li>
-                <li class="list-group-item">Réaliser un CRUD des disponibilités pour un véhicule</li>
-                <li class="list-group-item">Consulter les disponibilités d’un véhicule</li>
-                <li class="list-group-item">Bonus 1 : Filtrer la recherche par prix</li>
-                <li class="list-group-item">Bonus 2 : Proposer des véhicules disponibles à +/- 1 jour de la date de recherche, si pas de disponibilités à la date souhaitée</li>
-            </ul>
+        <h3 class="my-3">Les fonctionnalités attendues sont les suivantes :</h3>
+        <ul class="list-group p-3">
+            <li class="list-group-item">Créer un véhicule</li>
+            <li class="list-group-item">Réaliser un CRUD des disponibilités pour un véhicule</li>
+            <li class="list-group-item">Consulter les disponibilités d’un véhicule</li>
+            <li class="list-group-item">Bonus 1 : Filtrer la recherche par prix</li>
+            <li class="list-group-item">Bonus 2 : Proposer des véhicules disponibles à +/- 1 jour de la date de recherche, si pas de disponibilités à la date souhaitée</li>
+        </ul>
 
-            <div class="my-3 text-center">
-            <a class="btn btn-warning text-center" href="{{ path('vehicle_index')}}">C'est par ici</a>
-            </div>
-
-
-
-        </section>
-    </div>
+        <div class="my-3 text-center">
+        <a class="btn btn-warning text-center" href="{{ path('vehicle_index')}}">C'est par ici</a>
+        </div>
+        
+    </section>
 {% endblock %}

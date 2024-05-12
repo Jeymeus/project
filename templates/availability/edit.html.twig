@@ -3,47 +3,45 @@
 {% block title %}Modifier une disponibilité{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <h1 class="mt-4">Modifier une disponibilité pour le camper {{ vehicle.brand }} {{ vehicle.model }}</h1>
+    <h1 class="mt-4">Modifier une disponibilité pour le camper {{ vehicle.brand }} {{ vehicle.model }}</h1>
 
-        <div class="row">
-            <div class="col-md-6">
-                {{ form_start(form, {'attr': {'class': 'form'}}) }}
+    <div class="row">
+        <div class="col-md-6">
+            {{ form_start(form, {'attr': {'class': 'form'}}) }}
 
-                <div class="form-group mb-3 mt-3">
-                    {{ form_label(form.start_date, 'Date de début') }}
-                    {{ form_widget(form.start_date, {'attr': {'class': 'form-control'}}) }}
-                </div>
-
-                <div class="form-group  mb-3">
-                    {{ form_label(form.end_date, 'Date de fin') }}
-                    {{ form_widget(form.end_date, {'attr': {'class': 'form-control'}}) }}
-                </div>
-
-                <div class="form-group mb-3">
-                    {{ form_label(form.price_per_day, 'Prix par jour') }}
-                    {{ form_widget(form.price_per_day, {'attr': {'class': 'form-control'}}) }}
-                </div>
-
-                <div class="form-group mb-3">
-                    {{ form_label(form.status, 'Statut', {'label_attr': {'class': 'form-check-label'}}) }}
-                    {% for child in form.status %}
-                        <div class="form-check form-check-inline">
-                            {{ form_widget(child, {'attr': {'class': 'form-check-input'}, 'label_attr': {'class': 'form-check-label'}}) }}
-                            <label class="form-check-label" for="{{ child.vars.id }}">{{ child.vars.label }}</label>
-                        </div>
-                    {% endfor %}
-                </div>
-                
-                <div class="form-group mb-3">
-                    {{ form_label(form.vehicle, 'Camper', {'label_attr': {'class': 'form-label'}}) }}
-                    {{ form_widget(form.vehicle, {'attr': {'class': 'form-select'}}) }}
-                </div>
-
-                <button type="submit" class="btn btn-primary mb-3">Enregistrer les modifications</button>
-
-                {{ form_end(form) }}
+            <div class="form-group mb-3 mt-3">
+                {{ form_label(form.start_date, 'Date de début') }}
+                {{ form_widget(form.start_date, {'attr': {'class': 'form-control'}}) }}
             </div>
+
+            <div class="form-group  mb-3">
+                {{ form_label(form.end_date, 'Date de fin') }}
+                {{ form_widget(form.end_date, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <div class="form-group mb-3">
+                {{ form_label(form.price_per_day, 'Prix par jour') }}
+                {{ form_widget(form.price_per_day, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <div class="form-group mb-3">
+                {{ form_label(form.status, 'Statut', {'label_attr': {'class': 'form-check-label'}}) }}
+                {% for child in form.status %}
+                    <div class="form-check form-check-inline">
+                        {{ form_widget(child, {'attr': {'class': 'form-check-input'}, 'label_attr': {'class': 'form-check-label'}}) }}
+                        <label class="form-check-label" for="{{ child.vars.id }}">{{ child.vars.label }}</label>
+                    </div>
+                {% endfor %}
+            </div>
+            
+            <div class="form-group mb-3">
+                {{ form_label(form.vehicle, 'Camper', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.vehicle, {'attr': {'class': 'form-select'}}) }}
+            </div>
+
+            <button type="submit" class="btn btn-primary mb-3">Enregistrer les modifications</button>
+
+            {{ form_end(form) }}
         </div>
     </div>
 {% endblock %}

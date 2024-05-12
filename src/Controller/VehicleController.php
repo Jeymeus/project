@@ -38,20 +38,26 @@ class VehicleController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            
-            // Auto-remplir les champs createdAt et updatedAt
-            $vehicle->setCreatedAt(new \DateTimeImmutable());
-            $vehicle->setUpdatedAt(new \DateTimeImmutable());
-
             $entityManager = $doctrine->getManager();
-            $entityManager->persist($vehicle);
-            $entityManager->flush();
+            
+            // Vérifier si le véhicule existe déjà
+            $existingVehicle = $entityManager->getRepository(Vehicle::class)->findOneBy([
+            'brand' => $vehicle->getBrand(),
+            'model' => $vehicle->getModel(),
+            ]);
+            if ($existingVehicle !== null) {
+                $this->addFlash('danger', 'Ce véhicule existe déjà.');
+            } else {        
+                $entityManager->persist($vehicle);
+                $entityManager->flush();
+                $this->addFlash('success', 'Le véhicule a bien été ajouté.');
 
-            return $this->redirectToRoute('vehicle_index');
+                return $this->redirectToRoute('vehicle_index');
+            }
         }
 
         return $this->render('vehicle/create.html.twig', [
-            'form' => $form->createView(),
+        'form' => $form->createView(),
         ]);
     }
     

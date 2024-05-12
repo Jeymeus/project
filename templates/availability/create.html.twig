@@ -5,12 +5,11 @@
 {% block title %}Ajout d'une disponibilité{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <h1 class="mt-4">Ajout d'une disponibilité</h1>
+    <h1 class="mt-4">Ajout d'une disponibilité</h1>
 
-        <div class="row">
-            <div class="col-md-6">
-                {{ form_start(form, {'attr': {'class': 'form'}}) }}
+    <div class="row">
+        <div class="col-md-6">
+            {{ form_start(form, {'attr': {'class': 'form'}}) }}
 
                 <div class="form-group mb-3 mt-3">
                     {{ form_label(form.start_date, 'Date de début') }}
@@ -44,8 +43,7 @@
 
                 <button type="submit" class="btn btn-primary mb-3">Créer</button>
 
-                {{ form_end(form) }}
-            </div>
+            {{ form_end(form) }}
         </div>
     </div>
 {% endblock %}

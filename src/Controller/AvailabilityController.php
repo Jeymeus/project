@@ -24,10 +24,6 @@ class AvailabilityController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            // Auto-remplir les champs createdAt et updatedAt
-            $availability->setCreatedAt(new \DateTimeImmutable());
-            $availability->setUpdatedAt(new \DateTimeImmutable());
-
             $entityManager->persist($availability);
             $entityManager->flush();
 
@@ -83,7 +79,6 @@ class AvailabilityController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $availability->setUpdatedAt(new \DateTimeImmutable());
             $entityManager->flush();
 
             $this->addFlash('success', 'Disponibilité modifiée avec succès.');
