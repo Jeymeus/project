@@ -26,7 +26,7 @@ class SearchAvailabilityType extends AbstractType
                 'format' => 'yyyy-MM-dd',
             ])
             ->add('maxPrice', ChoiceType::class, [
-                'label' => 'Prix maximum par jour',
+                'label' => 'Prix maximum de la location',
                 'choices' => array_combine(self::MAX_PRICE, self::MAX_PRICE),
             ]);
     }

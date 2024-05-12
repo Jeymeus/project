@@ -14,8 +14,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AvailabilityController extends AbstractController
 {
-    #[Route('/availability/create', name: 'availability_create')]
-    public function create(Request $request, EntityManagerInterface $entityManager): Response
+    /**
+     * #[Route('/disponibilites/ajouter', name: 'availability_create')]
+    */public function create(Request $request, EntityManagerInterface $entityManager): Response
     {
         $availability = new Availability();
         $form = $this->createForm(AvailabilityType::class, $availability);
@@ -40,9 +41,10 @@ class AvailabilityController extends AbstractController
         ]);
     }
 
-     #[Route('/disponibilites/{slug}', name: 'availability_show')]
-        public function show(string $slug, AvailabilityRepository $availabilityRepository, EntityManagerInterface $entityManager): Response
-    {
+    /**
+     * #[Route('/disponibilites/{slug}', name: 'availability_show')]
+    */
+    public function show(string $slug, AvailabilityRepository $availabilityRepository, EntityManagerInterface $entityManager): Response{
         // Récupérer le véhicule en utilisant le slug
         $vehicleRepository = $entityManager->getRepository(Vehicle::class);
         $vehicle = $vehicleRepository->findOneBy(['slug' => $slug]);
@@ -60,7 +62,9 @@ class AvailabilityController extends AbstractController
         ]);
     }
 
-    #[Route('/disponibilites/{slug}/{id}/edit', name: 'availability_edit', requirements: ['slug' => '[a-z0-9\-]+', 'id' => '\d+'])]
+    /**
+     * #[Route('/disponibilites/{slug}/{id}/modifier', name: 'availability_edit', requirements: ['slug' => '[a-z0-9\-]+', 'id' => '\d+'])]
+    */
     public function edit(Request $request, EntityManagerInterface $entityManager, string $slug, int $id): Response
     {
         $vehicle = $entityManager->getRepository(Vehicle::class)->findOneBy(['slug' => $slug]);
@@ -93,7 +97,9 @@ class AvailabilityController extends AbstractController
         ]);
     }
 
-    #[Route('/disponibilites/{slug}/{id}/confirmer', name: 'availability_delete_confirm', methods: ['GET'])]
+    /**
+     * #[Route('/disponibilites/{slug}/{id}/confirmer', name: 'availability_delete_confirm', methods: ['GET'])]
+    */
     public function deleteConfirm(string $slug, int $id, EntityManagerInterface $entityManager): Response
     {
         $vehicle = $entityManager->getRepository(Vehicle::class)->findOneBy(['slug' => $slug]);
@@ -114,7 +120,9 @@ class AvailabilityController extends AbstractController
         ]);
     }
 
-    #[Route('/disponibilites/{slug}/{id}/supprimer', name: 'availability_delete', methods: ['DELETE'])]
+    /**
+     * #[Route('/disponibilites/{slug}/{id}/supprimer', name: 'availability_delete', methods: ['DELETE'])]
+    */
     public function delete(Request $request, EntityManagerInterface $entityManager, string $slug, int $id): Response
     {
 

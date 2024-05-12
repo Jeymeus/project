@@ -4,6 +4,14 @@ controllers:
         namespace: App\Controller
     type: attribute
 
+home:
+    path: /
+    controller: App\Controller\HomeController::index
+
+vehicle_index:
+    path: /vehicules
+    controller: App\Controller\VehicleController::index
+
 vehicle_create:
     path: /vehicules/ajouter
     controller: App\Controller\VehicleController::create
@@ -11,10 +19,6 @@ vehicle_create:
 availability_create:
     path: /disponibilites/ajouter
     controller: 'App\Controller\AvailabilityController::create'
-
-vehicle_index:
-    path: /vehicules
-    controller: App\Controller\VehicleController::index
 
 availability_show:
     path: /disponibilites/{slug}
@@ -44,4 +48,6 @@ availability_delete:
         slug: '[a-z0-9\-]+'
         id: '\d+'
 
-
+search_availability:
+    path: /recherche
+    controller: App\Controller\SearchController::searchAvailability

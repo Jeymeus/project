@@ -27,7 +27,6 @@ class VehicleController extends AbstractController
         ]);
     }
 
-
     /**
      * @Route("/vehicle/create", name="vehicle_create")
      */

@@ -11,7 +11,9 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class SearchController extends AbstractController
 {
-    #[Route('/recherche', name: 'search_availability')]
+    /**
+     * #[Route('/recherche', name: 'search_availability')]
+    */
     public function searchAvailability(Request $request, AvailabilityRepository $availabilityRepository): Response
     {
         $availabilities = [];
