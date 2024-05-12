@@ -12,6 +12,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormEvent;
 
 class AvailabilityType extends AbstractType
 {
@@ -44,7 +45,14 @@ class AvailabilityType extends AbstractType
                     return $vehicle->getBrand() . ' ' . $vehicle->getModel();
                 },
             ])
-            ->addEventListener(FormEvents::POST_SUBMIT, $this->attachTimestamps(...));
+            ->addEventListener(FormEvents::POST_SUBMIT, $this->attachTimestamps(...))
+            ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+                $data = $event->getData();
+                $availability = $event->getForm()->getData();
+
+                $availability->setStartDateValue(\DateTime::createFromFormat('Y-m-d', $data['start_date']));
+                $availability->setEndDateValue(\DateTime::createFromFormat('Y-m-d', $data['end_date']));
+            });
     }
 
      public function attachTimestamps(PostSubmitEvent $event) : void

@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\AvailabilityRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: AvailabilityRepository::class)]
 class Availability
@@ -18,9 +20,12 @@ class Availability
     private ?Vehicle $vehicle = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Assert\NotBlank(message: 'La date ne peut pas être vide.')]
     private ?\DateTimeInterface $start_date = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Assert\NotBlank(message: 'La date ne peut pas être vide.')]
+    #[Assert\GreaterThan(propertyPath: "start_date", message: "La date de fin doit être postérieure à la date de début.")]
     private ?\DateTimeInterface $end_date = null;
 
     #[ORM\Column(nullable: true)]
@@ -130,6 +135,16 @@ class Availability
         $this->updatedAt = $updatedAt;
 
         return $this;
+    }
+
+    public function setStartDateValue($start_date): void
+    {
+        $this->start_date = $start_date instanceof \DateTimeInterface ? $start_date : \DateTime::createFromFormat('Y-m-d', $start_date);
+    }
+
+    public function setEndDateValue($end_date): void
+    {
+        $this->end_date = $end_date instanceof \DateTimeInterface ? $end_date : \DateTime::createFromFormat('Y-m-d', $end_date);
     }
 
     /**
