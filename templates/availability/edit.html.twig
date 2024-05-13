@@ -9,37 +9,52 @@
         <div class="col-md-6">
             {{ form_start(form, {'attr': {'class': 'form'}}) }}
 
-            <div class="form-group mb-3 mt-3">
-                {{ form_label(form.start_date, 'Date de début') }}
-                {{ form_widget(form.start_date, {'attr': {'class': 'form-control'}}) }}
-            </div>
+                <div class="form-group mb-3 mt-3">
+                    {{ form_label(form.start_date, 'Date de début') }}
+                    {{ form_widget(form.start_date, {'attr': {'class': 'form-control' ~ (form.start_date.vars.errors|length > 0 ? ' is-invalid' : '')}}) }}
+                    {% if form.start_date.vars.errors|length > 0 %}
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.start_date) }}
+                        </div>
+                    {% endif %}
+                </div>
 
-            <div class="form-group  mb-3">
-                {{ form_label(form.end_date, 'Date de fin') }}
-                {{ form_widget(form.end_date, {'attr': {'class': 'form-control'}}) }}
-            </div>
+                <div class="form-group  mb-3">
+                    {{ form_label(form.end_date, 'Date de fin') }}
+                    {{ form_widget(form.end_date, {'attr': {'class': 'form-control' ~ (form.end_date.vars.errors|length > 0 ? ' is-invalid' : '')}}) }}
+                    {% if form.end_date.vars.errors|length > 0 %}
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.end_date) }}
+                        </div>
+                    {% endif %}
+                </div>
 
-            <div class="form-group mb-3">
-                {{ form_label(form.price_per_day, 'Prix par jour') }}
-                {{ form_widget(form.price_per_day, {'attr': {'class': 'form-control'}}) }}
-            </div>
+                <div class="form-group mb-3">
+                    {{ form_label(form.price_per_day, 'Prix par jour') }}
+                    {{ form_widget(form.price_per_day, {'attr': {'class': 'form-control' ~ (form.price_per_day.vars.errors|length > 0 ? ' is-invalid' : '')}}) }}
+                    {% if form.price_per_day.vars.errors|length > 0 %}
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.price_per_day) }}
+                        </div>
+                    {% endif %}
+                </div>
 
-            <div class="form-group mb-3">
-                {{ form_label(form.status, 'Statut', {'label_attr': {'class': 'form-check-label'}}) }}
-                {% for child in form.status %}
-                    <div class="form-check form-check-inline">
-                        {{ form_widget(child, {'attr': {'class': 'form-check-input'}, 'label_attr': {'class': 'form-check-label'}}) }}
-                        <label class="form-check-label" for="{{ child.vars.id }}">{{ child.vars.label }}</label>
-                    </div>
-                {% endfor %}
-            </div>
-            
-            <div class="form-group mb-3">
-                {{ form_label(form.vehicle, 'Camper', {'label_attr': {'class': 'form-label'}}) }}
-                {{ form_widget(form.vehicle, {'attr': {'class': 'form-select'}}) }}
-            </div>
+                <div class="form-group mb-3">
+                    {{ form_label(form.status, 'Statut', {'label_attr': {'class': 'form-check-label'}}) }}
+                    {% for child in form.status %}
+                        <div class="form-check form-check-inline">
+                            {{ form_widget(child, {'attr': {'class': 'form-check-input'}, 'label_attr': {'class': 'form-check-label'}}) }}
+                            <label class="form-check-label" for="{{ child.vars.id }}">{{ child.vars.label }}</label>
+                        </div>
+                    {% endfor %}
+                </div>
+                
+                <div class="form-group mb-3">
+                    {{ form_label(form.vehicle, 'Camper', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.vehicle, {'attr': {'class': 'form-select'}}) }}
+                </div>
 
-            <button type="submit" class="btn btn-primary mb-3">Enregistrer les modifications</button>
+                <button type="submit" class="btn btn-primary mb-3">Enregistrer les modifications</button>
 
             {{ form_end(form) }}
         </div>

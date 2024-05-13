@@ -22,13 +22,15 @@ class Availability
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     #[Assert\NotBlank(message: 'La date ne peut pas être vide.')]
     private ?\DateTimeInterface $start_date = null;
-
+    
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     #[Assert\NotBlank(message: 'La date ne peut pas être vide.')]
     #[Assert\GreaterThan(propertyPath: "start_date", message: "La date de fin doit être postérieure à la date de début.")]
     private ?\DateTimeInterface $end_date = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\Type(type: 'numeric', message: 'Ceci n\'est pas un nombre.')]
+    #[Assert\GreaterThanOrEqual(value: 0, message: 'Le prix doit êre supérieur à 0.')]
     private ?float $price_per_day = null;
 
     #[ORM\Column(nullable: true)]
@@ -146,22 +148,5 @@ class Availability
     {
         $this->end_date = $end_date instanceof \DateTimeInterface ? $end_date : \DateTime::createFromFormat('Y-m-d', $end_date);
     }
-
-    /**
-     * @ORM\PrePersist
-     */
-    public function setCreatedAtValue(): void
-    {
-        $this->createdAt = new \DateTimeImmutable();
-    }
-
-    /**
-     * @ORM\PreUpdate
-     */
-    public function setUpdatedAtValue(): void
-    {
-        $this->updatedAt = new \DateTimeImmutable();
-    }
-
 
 }

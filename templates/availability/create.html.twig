@@ -1,5 +1,3 @@
-{# templates/availability/create.html.twig #}
-
 {% extends 'base.html.twig' %}
 
 {% block title %}Ajout d'une disponibilité{% endblock %}
@@ -13,7 +11,12 @@
 
                 <div class="form-group mb-3 mt-3">
                     {{ form_label(form.start_date, 'Date de début') }}
-                    {{ form_widget(form.start_date, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_widget(form.start_date, {'attr': {'class': 'form-control' ~ (form.start_date.vars.errors|length > 0 ? ' is-invalid' : '')}}) }}
+                    {% if form.start_date.vars.errors|length > 0 %}
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.start_date) }}
+                        </div>
+                    {% endif %}
                 </div>
 
                 <div class="form-group  mb-3">
@@ -28,7 +31,12 @@
 
                 <div class="form-group mb-3">
                     {{ form_label(form.price_per_day, 'Prix par jour') }}
-                    {{ form_widget(form.price_per_day, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_widget(form.price_per_day, {'attr': {'class': 'form-control' ~ (form.price_per_day.vars.errors|length > 0 ? ' is-invalid' : '')}}) }}
+                    {% if form.price_per_day.vars.errors|length > 0 %}
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.price_per_day) }}
+                        </div>
+                    {% endif %}
                 </div>
 
                 <div class="form-group mb-3">
