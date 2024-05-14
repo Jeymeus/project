@@ -64,24 +64,29 @@ class SearchController extends AbstractController
         $durations = [];
 
         $modifications = [
-            '-1 day', '-1 day', '-1 day',
-            '', '', '',
-            '+1 day', '+1 day', '+1 day',
+            [-1, -1],
+            [-1, 0],
+            [-1, 1],
+            [0, -1],
+            [0, 0],
+            [0, 1],
+            [1, -1],
+            [1, 0],
+            [1, 1],
         ];
 
-        foreach ($modifications as $modification) {
-            $duration = [
-                'start_date' => clone $start_date,
-                'end_date' => clone $end_date,
+        foreach ($modifications as [$startModification, $endModification]) {
+            $start_date_clone = clone $start_date;
+            $end_date_clone = clone $end_date;
+
+            $start_date_clone->modify(sprintf('%d day', $startModification));
+            $end_date_clone->modify(sprintf('%d day', $endModification));
+
+            $durations[] = [
+                'start_date' => $start_date_clone,
+                'end_date' => $end_date_clone,
                 'maxPrice' => $maxPrice,
             ];
-
-            if (!empty($modification)) {
-                $duration['start_date']->modify($modification);
-                $duration['end_date']->modify($modification);
-            }
-
-            $durations[] = $duration;
         }
 
         return $durations;
