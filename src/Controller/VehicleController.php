@@ -17,6 +17,10 @@ class VehicleController extends AbstractController
 
     /**
      * @Route("/vehicules", name="vehicle_index")
+     * 
+     * @param ManagerRegistry $doctrine The Doctrine registry.
+     * @return Response A HTTP response object.
+     * 
      */
     public function index(ManagerRegistry $doctrine): Response
     {
@@ -28,7 +32,12 @@ class VehicleController extends AbstractController
     }
 
     /**
-     * @Route("/vehicle/create", name="vehicle_create")
+     * @Route("/vehicules/ajouter", name="vehicle_create")
+     * 
+     * @param Request $request The HTTP request object.
+     * @param ManagerRegistry $doctrine The Doctrine registry.
+     * @return Response A HTTP response object.
+     * 
      */
     public function create(Request $request, ManagerRegistry $doctrine): Response
     {
@@ -40,7 +49,6 @@ class VehicleController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $doctrine->getManager();
             
-            // Vérifier si le véhicule existe déjà
             $existingVehicle = $entityManager->getRepository(Vehicle::class)->findOneBy([
             'brand' => $vehicle->getBrand(),
             'model' => $vehicle->getModel(),
@@ -57,7 +65,7 @@ class VehicleController extends AbstractController
         }
 
         return $this->render('vehicle/create.html.twig', [
-        'form' => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
     

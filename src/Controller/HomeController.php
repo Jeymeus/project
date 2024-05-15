@@ -10,6 +10,9 @@ class HomeController extends AbstractController
     
     /**
      * #[Route('/', name: 'home')]
+     * 
+     * @return Response A HTTP response object.
+     * 
     */
     public function index(): Response
     {

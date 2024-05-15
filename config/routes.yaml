@@ -11,20 +11,24 @@ home:
 vehicle_index:
     path: /vehicules
     controller: App\Controller\VehicleController::index
+    methods: [GET]
 
 vehicle_create:
     path: /vehicules/ajouter
     controller: App\Controller\VehicleController::create
+    methods: [GET, POST]
 
 availability_create:
     path: /disponibilites/ajouter
-    controller: 'App\Controller\AvailabilityController::create'
+    controller: App\Controller\AvailabilityController::create
+    methods: [GET, POST]
 
 availability_show:
     path: /disponibilites/{slug}
     controller: App\Controller\AvailabilityController::show
     requirements:
         slug: '[a-z0-9\-]+'
+    methods: [GET]
 
 availability_edit:
     path: /disponibilites/{slug}/{id}/modifier
@@ -32,6 +36,7 @@ availability_edit:
     requirements:
         slug: '[a-z0-9\-]+'
         id: \d+
+    methods: [GET, POST]
 
 availability_delete_confirm:
     path: /disponibilites/{slug}/{id}/confirmer
@@ -39,15 +44,18 @@ availability_delete_confirm:
     requirements:
         slug: '[a-z0-9\-]+'
         id: '\d+'
+    methods: [GET]
 
 availability_delete:
     path: /disponibilites/{slug}/{id}/supprimer
-    methods: [DELETE]
     controller: App\Controller\AvailabilityController::delete
     requirements:
         slug: '[a-z0-9\-]+'
         id: '\d+'
+    methods: [DELETE]
 
 search_availability:
     path: /recherche
     controller: App\Controller\SearchController::searchAvailability
+    methods: [GET, POST]
+

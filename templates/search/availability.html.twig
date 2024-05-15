@@ -34,7 +34,7 @@
                 {{ form_widget(search_form.maxPrice, {'attr': {'class': 'form-control'}}) }}
             </div>
 
-            <button type="submit" class="btn btn-primary mb-3">Rechercher</button>
+            <button type="submit" class="btn btn-warning mb-3">Rechercher</button>
 
             {{ form_end(search_form) }}
         </div>
@@ -50,7 +50,7 @@
                 <input type="hidden" name="start_date" value="{{ search_form.start_date.vars.value }}">
                 <input type="hidden" name="end_date" value="{{ search_form.end_date.vars.value }}">
                 <input type="hidden" name="maxPrice" value="{{ search_form.maxPrice.vars.value }}">
-                <button type="submit" class="btn btn-primary mt-3">Étendre la recherche</button>
+                <button type="submit" class="btn btn-warning mt-3">Étendre la recherche à + / - 1 jour</button>
             </form>
         {% else %}
             {% for availability in availabilities %}

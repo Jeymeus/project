@@ -9,6 +9,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 #[ORM\Entity(repositoryClass: AvailabilityRepository::class)]
+
+
 class Availability
 {
     #[ORM\Id]

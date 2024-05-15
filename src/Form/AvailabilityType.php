@@ -6,15 +6,14 @@ use App\Entity\Availability;
 use App\Entity\Vehicle;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Event\PostSubmitEvent;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormError;
+use Symfony\Component\Form\Event\PostSubmitEvent;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AvailabilityType extends AbstractType
 {
@@ -73,7 +72,13 @@ class AvailabilityType extends AbstractType
                 });
     }
 
-     public function attachTimestamps(PostSubmitEvent $event) : void
+    /**
+     * Attach timestamps to the availability entity.
+     * 
+     * @param PostSubmitEvent $event The event.
+     * 
+     */
+    public function attachTimestamps(PostSubmitEvent $event) : void
     {
         $data = $event->getData();
         if (!($data instanceof Availability)) {
