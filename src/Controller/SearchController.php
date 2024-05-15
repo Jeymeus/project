@@ -40,10 +40,8 @@ class SearchController extends AbstractController
                 $price_per_day = $this->calculatePricePerDay($duration);
                 $availabilitiesForDuration = $availabilityRepository->findByAvailability($duration, $price_per_day);
 
-                if (!empty($availabilitiesForDuration)) {
-                    $availabilities = $availabilitiesForDuration;
-                    
-                }
+                $availabilities = $availabilitiesForDuration;
+                
             }
         }
 
