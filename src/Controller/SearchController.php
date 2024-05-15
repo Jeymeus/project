@@ -18,7 +18,7 @@ class SearchController extends AbstractController
      * @return Response A HTTP response object.
      *  
     */
-        public function searchAvailability(Request $request, AvailabilityRepository $availabilityRepository): Response
+    public function searchAvailability(Request $request, AvailabilityRepository $availabilityRepository): Response
     {
         $availabilities = [];
         $searchAvailabilityForm = $this->createForm(SearchAvailabilityType::class);
