@@ -57,5 +57,5 @@ availability_delete:
 search_availability:
     path: /recherche
     controller: App\Controller\SearchController::searchAvailability
-    methods: [GET, POST]
+    
 
